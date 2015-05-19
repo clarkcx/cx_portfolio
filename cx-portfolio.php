@@ -135,5 +135,35 @@ function client_init() {
 }
 add_action( 'init', 'client_init' );
 
+// This next bit includes template files that come with the plugin. Woot. 
+
+add_filter('template_include', 'portfolio_archive_template');
+add_filter('template_include', 'portfolio_post_template');
+
+function portfolio_archive_template( $template ) {
+  if ( is_post_type_archive('projects') ) {
+    $theme_files = array('archive-portfolio.php', 'cx_portfolio/archive-portfolio.php');
+    $exists_in_theme = locate_template($theme_files, false);
+    if ( $exists_in_theme != '' ) {
+      return $exists_in_theme;
+    } else {
+      return plugin_dir_path(__FILE__) . 'archive-portfolio.php';
+    }
+  }
+  return $template;
+}
+
+function portfolio_post_template( $template ) {
+  if ( is_singular('projects') ) {
+    $theme_files = array('single-projects.php', 'cx_portfolio/single-projects.php');
+    $exists_in_theme = locate_template($theme_files, false);
+    if ( $exists_in_theme != '' ) {
+      return $exists_in_theme;
+    } else {
+      return plugin_dir_path(__FILE__) . 'single-projects.php';
+    }
+  }
+  return $template;
+}
 
 ?>
