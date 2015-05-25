@@ -32,6 +32,7 @@ function Projects_register() {
  
 	$args = array(
 		'labels' => $labels,
+		'description' => __('Great websites are made for the end-users and designed around their needs. The way we work guides the design towards a result your customers will love. We also step out from the virtual world with event design.'),
 		'public' => true,
 		'publicly_queryable' => true,
 		'show_ui' => true,
@@ -42,7 +43,7 @@ function Projects_register() {
 		'hierarchical' => false,
 		'menu_position' => null,
 		'supports' => array('title','editor','thumbnail'),
-		'taxonomies' => array('category','post_tag'),
+		//'taxonomies' => array('category','post_tag'),
 		'register_meta_box_cb' => 'add_projects_metaboxes',
 		'has_archive' => true
 	  ); 
@@ -117,23 +118,49 @@ function cx_save_project_meta($post_id, $post) {
 	}
 }
 
-add_action('save_post_Projects', 'cx_save_project_meta', 1, 2); // save the custom fields
+add_action('save_post_projects', 'cx_save_project_meta', 1, 2); // save the custom fields
 
-// This next thang creates a custom Taxonomy for us to use with the Projects post type
+/*************************************
+* Custom Taxonomies
+*************************************/
 
-function client_init() {
+function create_project_tax_clients() {
 	// create a new taxonomy
+	$labels = array(
+		'singular_name' => __( 'Client' ),
+		'add_new_item' => __( 'Add New Client' )
+	);
+
 	register_taxonomy(
 		'client',
 		'projects',
 		array(
 			'hierarchical' => true,
 			'label' => __( 'Clients' ),
+			'labels' => $labels,
 			'rewrite' => array( 'slug' => 'clients' )
 		)
 	);
 }
-add_action( 'init', 'client_init' );
+function create_project_tax_type() {
+	$labels = array(
+		'singular_name' => __( 'Project' ),
+		'add_new_item' => __( 'Add New Project type' )
+	);
+	// create a new taxonomy
+	register_taxonomy(
+		'project_type',
+		'projects',
+		array(
+			'hierarchical' => true,
+			'label' => __( 'Project type' ),
+			'labels' => $labels,
+			'rewrite' => array( 'slug' => 'project-type', 'with_front'=> false )
+		)
+	);
+}
+add_action( 'init', 'create_project_tax_clients' );
+add_action( 'init', 'create_project_tax_type' );
 
 // This next bit includes template files that come with the plugin. Woot. 
 
@@ -165,5 +192,97 @@ function portfolio_post_template( $template ) {
   }
   return $template;
 }
+
+/*************************************
+* includes
+*************************************/
+
+include('cx-portfolio-shortcodes.php'); // This creates shortcodes used by the plugin
+
+/*************************************
+* Styles and scripts
+*************************************/
+
+
+function cx_portfolio_scripts() {
+	wp_enqueue_style( 'cx-portfolio', plugins_url( '/css/cx-portfolio.css' , __FILE__ )	);
+	//wp_enqueue_script('cx-portfolio', plugins_url( '/js/cx-portfolio.js' , __FILE__ ), array('jquery'), '1.0.0', true );
+}
+
+add_action( 'wp_enqueue_scripts', 'cx_portfolio_scripts' );
+
+/*************************************
+* Change the number of projects shown 
+*************************************/
+
+function change_project_archive_count( $query ) {
+    if ( is_post_type_archive( 'projects' ) ) {
+        // Display 50 posts for a custom post type called 'projects'
+        $query->set( 'posts_per_page', 50 );
+        return;
+    }
+}
+add_action( 'pre_get_posts', 'change_project_archive_count', 1 );
+
+/*************************************
+* Add extra featured images to projects
+This requires the MultiPostThumbnails plugin by Chris Scott
+https://github.com/voceconnect/multi-post-thumbnails/wiki
+*************************************/
+
+function add_extra_projects_images(){
+	if (class_exists('MultiPostThumbnails')) {
+	    new MultiPostThumbnails(
+	        array(
+	            'label' => 'Second Image',
+	            'id' => 'second-image',
+	            'post_type' => 'projects'
+	        )
+	    );
+	}
+	if (class_exists('MultiPostThumbnails')) {
+	    new MultiPostThumbnails(
+	        array(
+	            'label' => 'Third Image',
+	            'id' => 'third-image',
+	            'post_type' => 'projects'
+	        )
+	    );
+	}
+	if (class_exists('MultiPostThumbnails')) {
+	    new MultiPostThumbnails(
+	        array(
+	            'label' => 'Fourth Image',
+	            'id' => 'fourth-image',
+	            'post_type' => 'projects'
+	        )
+	    );
+	}
+	if (class_exists('MultiPostThumbnails')) {
+	    new MultiPostThumbnails(
+	        array(
+	            'label' => 'Thumbnail Image',
+	            'id' => 'thumbnail-image',
+	            'post_type' => 'projects'
+	        )
+	    );
+	}
+}
+add_action('wp_loaded','add_extra_projects_images');
+
+/*************************************
+* Add extra featured images to projects
+This requires the Posts 2 Posts plugin by Scribu
+https://github.com/scribu/wp-posts-to-posts/wiki/Basic-usage
+*************************************/
+
+function my_connection_projects_to_projects() {
+    p2p_register_connection_type( array(
+        'name' => 'project_to_project',
+        'from' => 'projects',
+        'to' => 'projects'
+    ) );
+}
+add_action( 'p2p_init', 'my_connection_projects_to_projects' );
 
 ?>
