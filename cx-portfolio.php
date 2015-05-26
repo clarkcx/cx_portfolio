@@ -66,12 +66,15 @@ function cx_project_info() {
 	echo '<input type="hidden" name="projectmeta_noncename" id="projectmeta_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 	
 	// Get the additional info data if it's already been entered
+	$project_video = get_post_meta($post->ID, '_vimeo', true);
 	$project_duration = get_post_meta($post->ID, '_duration', true);
 	$project_url = get_post_meta($post->ID, '_url', true);
 	$project_testimonial_text = get_post_meta($post->ID, '_testimonial_text', true);
 	$project_testimonial_name = get_post_meta($post->ID, '_testimonial_name', true);
 	
 	// Echo out the field
+	echo '<p>Video (Vimeo ID):</p>';
+	echo '<input type="text" name="_vimeo" value="' . $project_video . '" class="widefat" />';
 	echo '<p>Duration (weeks):</p>';
 	echo '<input type="text" name="_duration" value="' . $project_duration . '" class="widefat" />';
 	echo '<p>URL:</p>';
@@ -99,6 +102,7 @@ function cx_save_project_meta($post_id, $post) {
 	// OK, we're authenticated: we need to find and save the data
 	// We'll put it into an array to make it easier to loop though.
 	
+	$projects_meta['_vimeo'] = $_POST['_vimeo'];
 	$projects_meta['_duration'] = $_POST['_duration'];
 	$projects_meta['_url'] = $_POST['_url'];
 	$projects_meta['_testimonial_text'] = $_POST['_testimonial_text'];

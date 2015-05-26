@@ -82,8 +82,8 @@ get_header(); ?>
 
 			<?php if ( has_post_thumbnail() ) { ?>
 					<figure class="excerpt">
+					<a href="<?php echo get_permalink(); ?>" class="work-thumb">
 					<figcaption><?php the_title(); ?></figcaption>
-					<a href="<?php echo get_permalink(); ?>">
 					<?php 
 					if (class_exists('MultiPostThumbnails')) :
 				    

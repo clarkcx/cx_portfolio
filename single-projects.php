@@ -14,6 +14,9 @@ get_header(); ?>
 			</header><!-- .entry-header -->
 
 			<?php 
+				$custom = get_post_custom($post->ID);
+				$project_video = $custom["_vimeo"][0];
+
 				if ( has_post_thumbnail() ) {
 					echo '<figure class="hero">';
 					the_post_thumbnail();
@@ -71,7 +74,6 @@ get_header(); ?>
 							echo '</div>';
 						}
 
-						$custom = get_post_custom($post->ID);
 						$project_url = $custom["_url"][0];
 						if (isset($project_url)) {
 							echo '<a href="' . $project_url .'" class="btn">Visit ' . get_the_title() . '</a>';
@@ -160,8 +162,11 @@ get_header(); ?>
 				</div><!-- .row -->
 
 
-
-
+			<?php
+			if (isset($project_video)) {
+					echo '<div class="videoWrapper"><iframe src="https://player.vimeo.com/video/'.$project_video.'?color=323232&title=0&byline=0&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>';
+			}
+			?>
 
 
 			</div>
