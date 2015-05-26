@@ -166,8 +166,9 @@ get_header(); ?>
 
 			</div>
 
-			<div class="related-projects container-fluid">
+			<div class="portfolio-drop-in related">
 				<div class="container">
+					<div class="row">
 					<?php
 					// Find connected pages
 					$connected = new WP_Query( array(
@@ -179,10 +180,10 @@ get_header(); ?>
 					// Display connected pages
 					if ( $connected->have_posts() ) :
 					?>
-					<h3>Related projects</h3>
+					<div class="col-xs-12"><h2 class="inline-title">Related projects</h2></div>
 					<ul class="latest-work">
 					<?php while ( $connected->have_posts() ) : $connected->the_post(); ?>
-					    <li class="col-xs-12 col-sm-4 col-lg-4">
+					    <li class="col-xs-12 col-sm-4 col-lg-3">
 					    	<a href="<?php the_permalink(); ?>">
 					    		<?php 
 								if ( has_post_thumbnail() ) {
@@ -199,7 +200,9 @@ get_header(); ?>
 											$types = array();
 										
 											foreach ( $terms as $term ) {
-												$types[] = $term->name;
+												if ($term->parent == 0) {
+													$types[] = $term->name;
+												}
 											}
 																
 											$types = join( " | ", $types );
@@ -223,8 +226,9 @@ get_header(); ?>
 
 					endif;
 					?>
-				</div>
-			</div>
+					</div><!-- .row -->
+				</div><!-- .container -->
+			</div><!-- .portfolio-drop-in -->
 
 		<?php endwhile; // end of the loop. ?>
 
