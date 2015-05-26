@@ -40,7 +40,17 @@ function cx_sc_latest_work() {
 
 						echo '</span></div>';
 						echo '</figcaption>';
-						the_post_thumbnail();
+						
+						if (class_exists('MultiPostThumbnails')) :
+				    
+					    if (MultiPostThumbnails::has_post_thumbnail(get_post_type(),'thumbnail-image')) {
+					    	MultiPostThumbnails::the_post_thumbnail(get_post_type(),'thumbnail-image');
+					    } else {
+					    	echo the_post_thumbnail();
+					    }
+
+						endif;
+						
 						echo '</figure>';
 					}
 					?>
