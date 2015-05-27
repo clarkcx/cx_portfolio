@@ -43,42 +43,37 @@ get_header(); ?>
 					</div><!-- .entry-content -->
 					
 					<div class="project-meta col-md-4 visible-md visible-lg">
-						<?php
 						
-						if (isset($project_duration)) {
-							# echo '<b class="info-label">Duration: </b>' . $project_duration;
-						}
+						<?php 
 
-						$project_types = get_the_terms( $post->ID, 'project_type' );
+						$taxonomy     = 'project_type';
 
-						#print_r($project_types);
-						if ($project_types != '') {
-							echo '<h3 class="project-types">';
-							foreach ($project_types as $type) {
-								if ($type->parent == 0) {
-									echo '<span class="' . $type->slug . '">' . $type->name . '</span>';
-								}
-							}
-							echo '</h3>';
-						}
+						// get the term IDs assigned to post.
+						$post_terms = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
+						$term_ids = implode( ',' , $post_terms );
 
-						if ($project_types != '') {
-							echo '<div class="project-types">';
-							$end = end($project_types);
-							foreach ($project_types as $key => $type) {
-								if ($type->parent != 0) {
-									echo '<span class="' . $type->slug . '">' . $type->name . '</span>';
-									if ($end != $type) {
-										echo ', ';
-									}
-								}
-							}
-							echo '</div>';
-						}
+						$orderby      = 'name'; 
+						$show_count   = 0;      // 1 for yes, 0 for no
+						$pad_counts   = 0;      // 1 for yes, 0 for no
+						$hierarchical = 1;      // 1 for yes, 0 for no
+						$title        = '';
 
-						if (isset($project_url)) {
-							echo '<a href="' . $project_url .'" class="btn">Visit ' . get_the_title() . '</a>';
-						} ?>
+						$args = array(
+						  'taxonomy'     => $taxonomy,
+						  'orderby'      => $orderby,
+						  'show_count'   => $show_count,
+						  'pad_counts'   => $pad_counts,
+						  'hierarchical' => $hierarchical,
+						  'title_li'     => $title,
+						  'include'		 => $term_ids
+						);
+						?>
+
+						<ul class="skills">
+						<?php wp_list_categories( $args ); ?>
+						</ul>
+
+
 					</div><!-- .project-meta -->
 				</div><!-- .row -->
 
