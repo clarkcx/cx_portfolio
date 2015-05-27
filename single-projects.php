@@ -16,6 +16,7 @@ get_header(); ?>
 			<?php 
 				$custom = get_post_custom($post->ID);
 				$project_video = $custom["_vimeo"][0];
+				$project_url = $custom["_url"][0];
 
 				if ( has_post_thumbnail() ) {
 					echo '<figure class="hero">';
@@ -38,9 +39,10 @@ get_header(); ?>
 								$clients = join( ", ", $client_links );
 								#	echo '<b class="info-label">Client: </b>' . $clients . ' <br />';			
 						} ?>
+
 					</div><!-- .entry-content -->
 					
-					<div class="project-meta col-md-4">
+					<div class="project-meta col-md-4 visible-md visible-lg">
 						<?php
 						
 						if (isset($project_duration)) {
@@ -74,7 +76,6 @@ get_header(); ?>
 							echo '</div>';
 						}
 
-						$project_url = $custom["_url"][0];
 						if (isset($project_url)) {
 							echo '<a href="' . $project_url .'" class="btn">Visit ' . get_the_title() . '</a>';
 						} ?>
@@ -91,10 +92,10 @@ get_header(); ?>
 
 
 
-					<div class="col-sm-8">
+					<div class="col-md-8">
 
 						<div class="row">
-							<div class="project-testimonial col-xs-7">
+							<div class="project-testimonial col-sm-7">
 
 								<?php
 								$project_duration = $custom["_duration"][0];
@@ -112,7 +113,7 @@ get_header(); ?>
 
 								?> 
 							</div><!-- .project-testimonial -->
-							<div class="col-xs-5">
+							<div class="col-sm-5">
 							<figure class="project-image">
 							<?php if (class_exists('MultiPostThumbnails')) :
 							    MultiPostThumbnails::the_post_thumbnail(
@@ -134,8 +135,8 @@ get_header(); ?>
 
 							<div class="col-xs-12">
 								<div class="cta row-same-height">
-									<p class="col-xs-7 col-xs-height">Do you need help getting the most out of your business online?</p>
-									<div class="col-xs-4 col-sm-offset-1 col-xs-height col-middle"><a class="btn" href="../../contact/">Contact us</a></div>
+									<p class="col-sm-7 col-sm-height">Do you need help getting the most out of your business online?</p>
+									<div class="col-sm-4 col-sm-offset-1 col-sm-height col-middle"><a class="btn" href="../../contact/">Contact us</a></div>
 								</div>
 							</div>
 
@@ -144,7 +145,7 @@ get_header(); ?>
 
 
 
-					<div class="col-md-4">
+					<div class="col-md-4 visible-md visible-lg">
 						<figure>
 						<?php if (class_exists('MultiPostThumbnails')) :
 						    MultiPostThumbnails::the_post_thumbnail(
