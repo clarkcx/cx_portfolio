@@ -29,9 +29,11 @@ function cx_sc_latest_work() {
 							if ( $terms && ! is_wp_error( $terms ) ) : 
 							
 								$types = array();
-							
+								
 								foreach ( $terms as $term ) {
-									$types[] = $term->name;
+									if ($term->parent == 0) {
+										$types[] = $term->name;
+									}
 								}
 													
 								$types = join( " | ", $types );
