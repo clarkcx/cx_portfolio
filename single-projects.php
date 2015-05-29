@@ -189,28 +189,34 @@ get_header(); ?>
 					    		<?php 
 								if ( has_post_thumbnail() ) {
 									echo '<figure>';
-									echo '<figcaption class="overlay"><div>';
-									echo '<h3>';
-									the_title();
-									echo '</h3>';
-									echo '<span class="project-type">';
+									echo '<figcaption class="overlay">';
+										echo '<div class="outer">';
+										echo '<div class="middle">';
+										echo '<div class="inner">';
+										echo '<h3>';
+										the_title();
+										echo '</h3>';
+										echo '<span class="project-type">';
 
-										$terms = get_the_terms( $post->ID, 'project_type' );
-										if ( $terms && ! is_wp_error( $terms ) ) : 
-										
-											$types = array();
-										
-											foreach ( $terms as $term ) {
-												if ($term->parent == 0) {
-													$types[] = $term->name;
+											$terms = get_the_terms( $post->ID, 'project_type' );
+											if ( $terms && ! is_wp_error( $terms ) ) : 
+											
+												$types = array();
+											
+												foreach ( $terms as $term ) {
+													if ($term->parent == 0) {
+														$types[] = $term->name;
+													}
 												}
-											}
-																
-											$types = join( " | ", $types );
-											echo $types;
-										endif;
+																	
+												$types = join( " | ", $types );
+												echo $types;
+											endif;
 
-									echo '</span></div>';
+										echo '</span>'; // project-type
+										echo '</div>'; // inner
+										echo '</div>'; // middle
+										echo '</div>'; // outer
 									echo '</figcaption>';
 									the_post_thumbnail();
 									echo '</figure>';

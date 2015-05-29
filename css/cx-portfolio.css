@@ -40,10 +40,6 @@ ul.latest-work figure {
 
 .overlay {
 	display: none;
-}
-
-.latest-work a:hover .overlay {
-	display: inline-block;
 	position: absolute;
 	background: rgba(0,0,0,0.75);
 	width: 100%;
@@ -51,15 +47,14 @@ ul.latest-work figure {
 	text-align: center;
 	color: white;
 }
-
-.latest-work a .overlay div {
-	width: 100%;
-	display: inline-block;
-	position: absolute;
-	top: 25%;
-	left: 0;
-	font-size: 1.25em;
+.overlay h3 {
+	margin-top: 0;
 }
+
+.latest-work a:hover .overlay {
+	display: inline-block;
+}
+
 .latest-work a .overlay div span {
 	display: block;
 }
@@ -89,4 +84,22 @@ body.single-projects .entry-content {
 	background: white;
 	padding: 2em;
 	margin-top: -2em;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto; 
+    width: /*whatever width you want*/;
 }

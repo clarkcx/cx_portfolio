@@ -90,7 +90,7 @@ get_header(); ?>
 				    if (MultiPostThumbnails::has_post_thumbnail(get_post_type(),'thumbnail-image')) {
 				    	MultiPostThumbnails::the_post_thumbnail(get_post_type(),'thumbnail-image');
 				    } else {
-				    	echo the_post_thumbnail();
+				    	echo the_post_thumbnail('medium');
 				    }
 
 					endif;
