@@ -209,11 +209,12 @@ include('cx-portfolio-shortcodes.php'); // This creates shortcodes used by the p
 
 
 function cx_portfolio_scripts() {
+//	wp_enqueue_style( 'cx-portfolio', plugins_url( '/css/cx-portfolio.min.css' , __FILE__ )	);
 	wp_enqueue_style( 'cx-portfolio', plugins_url( '/css/cx-portfolio.css' , __FILE__ )	);
 	//wp_enqueue_script('cx-portfolio', plugins_url( '/js/cx-portfolio.js' , __FILE__ ), array('jquery'), '1.0.0', true );
 }
 
-add_action( 'wp_enqueue_scripts', 'cx_portfolio_scripts' );
+//add_action( 'wp_enqueue_scripts', 'cx_portfolio_scripts' );
 
 /*************************************
 * Change the number of projects shown 
