@@ -72,7 +72,11 @@ get_header(); ?>
 						<ul class="skills">
 						<?php wp_list_categories( $args ); ?>
 						</ul>
-
+						<?php
+						if (isset($project_url) && ($project_url != '')) {
+							echo '<a class="btn" href="' . $project_url . '">View the project</a>';
+						}
+						?>
 
 					</div><!-- .project-meta -->
 				</div><!-- .row -->
@@ -184,7 +188,7 @@ get_header(); ?>
 					<div class="col-xs-12"><h2 class="inline-title">Related projects</h2></div>
 					<ul class="latest-work">
 					<?php while ( $connected->have_posts() ) : $connected->the_post(); ?>
-					    <li class="col-xs-12 col-sm-4 col-lg-3">
+					    <li class="col-xs-12 col-sm-3">
 					    	<a href="<?php the_permalink(); ?>">
 					    		<?php 
 								if ( has_post_thumbnail() ) {
