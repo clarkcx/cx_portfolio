@@ -135,7 +135,7 @@ get_header(); ?>
 							<div class="col-xs-12">
 								<div class="cta row-same-height">
 									<p class="col-sm-7 col-sm-height">Do you need help getting the most out of your business online?</p>
-									<div class="col-sm-4 col-sm-offset-1 col-sm-height col-middle"><a class="btn" href="../../contact/">Contact us</a></div>
+									<div class="col-sm-4 col-sm-offset-1 col-sm-height col-middle"><a class="btn" href="<?php echo site_url(); ?>/contact/?ref=<?php echo $post->post_name; ?>">Contact us</a></div>
 								</div>
 							</div>
 
